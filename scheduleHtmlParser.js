@@ -36,12 +36,63 @@ function getDay(weekChinese) {
     }
 }
 function getSections(time) {
-    var a=Number(time.split(/第|周|\|单|双|{|}|-|,|节/)[2])
-    var b=Number(time.split(/第|周|\|单|双|{|}|-|,|节/)[3])
     var sections =[]
     for (var i=2;i<5;i++){
-        if(time.split(/第|周|\|单|双|{|}|-|,|节/)[i]!="" && sections.indexOf({section: Number(time.split(/第|周|\|单|双|{|}|-|,|节/)[i])})==-1){
-            sections.push({section: Number(time.split(/第|周|\|单|双|{|}|-|,|节/)[i])})
+        if(time.split(/第|周|\|单|双|{|}|-|,|节/)[i]!=="" && sections.indexOf({section: Number(time.split(/第|周|\|单|双|{|}|-|,|节/)[i])})===-1){
+            var num  =Number(time.split(/第|周|\|单|双|{|}|-|,|节/)[i])
+            if(num === 1)  {
+                sections.push({section: num,startTime: "08:00",endTime: "08:55"})
+            }
+            else if (num === 2) {
+                sections.push({section: num,startTime: "08:50",endTime: "09:35"})
+
+            }
+            else if (num === 3) {
+                sections.push({section: num,startTime: "09:50",endTime: "10:35"})
+
+            }
+            else if (num === 4) {
+                sections.push({section: num,startTime: "10:40",endTime: "11:25"})
+
+            }
+            else if (num === 5) {
+                sections.push({section: num,startTime: "11:30",endTime: "12:15"})
+
+            }
+            else if (num === 6) {
+                sections.push({section: num,startTime: "13:30",endTime: "14:15"})
+
+            }
+            else if (num === 7) {
+                sections.push({section: num,startTime: "14:20",endTime: "15:05"})
+            }
+            else if (num === 8) {
+                sections.push({section: num,startTime: "15:20",endTime: "16:05"})
+            }
+            else if (num === 9) {
+                sections.push({section: num,startTime: "16:10",endTime: "16:55"})
+            }
+            else if (num === 10) {
+                sections.push({section: num,startTime: "18:30",endTime: "19:15"})
+            }
+            else if (num === 11) {
+                sections.push({section: num,startTime: "19:20",endTime: "20:05"})
+            }
+            else if (num === 12) {
+                sections.push({section: num,startTime: "20:10",endTime: "20:55"})
+
+            }
+            else if (num === 13) {
+                sections.push({section: num,startTime: "21:00",endTime: "21:45"})
+            }
+            else {
+                sections.push({section: 0})
+                this.section.push({startTime: null});
+                this.section.push({endTime: null});
+            }
+
+
+
         }
     }
     return sections
@@ -122,13 +173,9 @@ function getResult(ceshi) {
 function scheduleHtmlParser(html) {
     let result = []
     let courses = $(html).find('td').has('br')
-    /*
-    console.info(courses)
-    */
     for (let p = 0; p < courses.length; p++) {
         let ceshi = courses[p]
         result.push.apply(result,getResult(ceshi))
-
         for (let i = 1;i<100;i++){
             if(ceshi.children[0].next.children[0].next.children[0].next.children[0].next.children[0].next!=null){
                 ceshi = ceshi.children[0].next.children[0].next.children[0].next.children[0].next.children[0].next.children[0]
@@ -137,43 +184,5 @@ function scheduleHtmlParser(html) {
         }
     }
     ReduceRepetition(result)
-    /*
-    console.info("-------")
-    for (var i =0 ;i< result.length;i++){
-        if (result[i].day==1){
-            console.info(result[i])
-        }
-    }
-    console.info("-------")
-
-    for (var i =0 ;i< result.length;i++){
-        if (result[i].day==2){
-            console.info(result[i])
-        }
-    }
-    console.info("-------")
-
-    for (var i =0 ;i< result.length;i++){
-        if (result[i].day==3){
-            console.info(result[i])
-        }
-    }
-    console.info("-------")
-
-    for (var i =0 ;i< result.length;i++){
-        if (result[i].day==4){
-            console.info(result[i])
-        }
-    }
-    console.info("-------")
-
-    for (var i =0 ;i< result.length;i++){
-        if (result[i].day==5){
-            console.info(result[i])
-        }
-    }
-    
-    console.info(result)
-    */
     return {courseInfos: result}
 }
