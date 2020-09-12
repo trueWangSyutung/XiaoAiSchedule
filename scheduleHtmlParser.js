@@ -80,7 +80,7 @@ function getSections(time) {
             }
             else if (num === 12) {
                 sections.push({section: num,startTime: "20:10",endTime: "20:55"})
-
+                
             }
             else if (num === 13) {
                 sections.push({section: num,startTime: "21:00",endTime: "21:45"})
@@ -167,22 +167,62 @@ function getResult(ceshi) {
     result.push(re)
 
     return result;
+}
+function text(result){
+    console.info("-------")
+    for (var i =0 ;i< result.length;i++){
+        if (result[i].day==1){
+            console.info(result[i])
+        }
+    }
+    console.info("-------")
 
+    for (var i =0 ;i< result.length;i++){
+        if (result[i].day==2){
+            console.info(result[i])
+        }
+    }
+    console.info("-------")
 
+    for (var i =0 ;i< result.length;i++){
+        if (result[i].day==3){
+            console.info(result[i])
+        }
+    }
+    console.info("-------")
+
+    for (var i =0 ;i< result.length;i++){
+        if (result[i].day==4){
+            console.info(result[i])
+        }
+    }
+    console.info("-------")
+
+    for (var i =0 ;i< result.length;i++){
+        if (result[i].day==5){
+            console.info(result[i])
+        }
+    }
+    console.info(result)
+}
+function get(courses) {
+let result = []
+for (let p = 0; p < courses.length; p++) {
+        let ceshi = courses[p]
+        result.push.apply(result,getResult(ceshi))
+        while(ceshi.children[0].next.children[0].next.children[0].next.children[0].next.children[0].next!=null){
+                ceshi = ceshi.children[0].next.children[0].next.children[0].next.children[0].next.children[0].next.children[0]
+                result.push.apply(result,getResult(ceshi))
+        }
+    }
+return result;
 }
 function scheduleHtmlParser(html) {
     let result = []
     let courses = $(html).find('td').has('br')
-    for (let p = 0; p < courses.length; p++) {
-        let ceshi = courses[p]
-        result.push.apply(result,getResult(ceshi))
-        for (let i = 1;i<100;i++){
-            if(ceshi.children[0].next.children[0].next.children[0].next.children[0].next.children[0].next!=null){
-                ceshi = ceshi.children[0].next.children[0].next.children[0].next.children[0].next.children[0].next.children[0]
-                result.push.apply(result,getResult(ceshi))
-            }
-        }
-    }
+    console.info(courses)
+    result = get(courses)
     ReduceRepetition(result)
+    text(result)
     return {courseInfos: result}
 }
