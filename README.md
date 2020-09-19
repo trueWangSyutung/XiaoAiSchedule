@@ -8,7 +8,7 @@
 
 #Xiaomi Xiaoai timetable 
 
-Xiaomi Xiaoai's curriculum is for the new edition of Zhengfang educational administration of Beijing University of information technology
+Xiaomi Xiaoai's curriculum is for the new edition of Zhengfang educational administration of Beijing  information technology University 
 Current problems:
 1. The function should be unimpeded
 2. The code is not simple enough
